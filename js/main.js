@@ -8,7 +8,6 @@ $(document).ready(function() {
             var monthToName = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"];
             // monthToName[ind-1]
             var mainObj = {};
-            var sommaAmount = 0;
             for (var i = 0; i < data.length; i++) {
                 var oggettoSingolo = data[i];           //associo a variabile ogni singolo oggetto contenuto in data
                 var amount = oggettoSingolo.amount;    //Prendo amount di ogni oggetto nell'API
@@ -19,13 +18,31 @@ $(document).ready(function() {
                 if (mainObj[month] === undefined) {     //inizializzo il mio mainObj creando le chiavi 'month':0;
                     mainObj[month] = 0;
                 }
-
-                for (var key in oggettoSingolo) {
-
-                }
-                // mainObj[month] += sommaAmountMensile;
-                // console.log(mainObj);
+                mainObj[month] += amount;
             }
+                var mesi = [];
+                var valori = [];
+
+                for (var key in mainObj) {
+                    // console.log(key);
+                    mesi.push(key);
+                    valori.push(mainObj[key]);
+                }
+
+
+            var ctx = document.getElementById('grafico');
+            var chart = new Chart(ctx, {
+
+                type: 'line',
+                data: {
+                    labels: ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"],
+                    datasets: [{
+                        data: valori,
+
+                    }],
+                }
+            });
+
         },
         error: function (err) {
             alert('BOOM');
