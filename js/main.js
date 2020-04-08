@@ -12,31 +12,31 @@ $(document).ready(function() {
 function apiPost() {
     var nomeVenditore = $('#nome-dipendente').val();
     var amount = $('#amount').val();
-    // var amountDaAggiungere = parseInt(amount);
+    var amountDaAggiungere = parseInt(amount);
     console.log(amount);
     var date = $('#date').val();
     date = moment(date, "YYYY-MM-DD").format("DD-MM-YYYY");
 
-    $.ajax({                 //CANCELLARE OGGETTO IN API
-    url: 'http://157.230.17.132:4026/sales/36',
-    method: 'DELETE',
-    success: function(result) {
-        // Do something with the result
-    }
-    });
-
-
-    // $.ajax({
-    //     url: 'http://157.230.17.132:4026/sales',
-    //     type: 'POST',
-    //     data: {
-    //         salesman: nomeVenditore,
-    //         amount: parseInt(amount),
-    //         date: date
-    //     },
-    //     success: function(result) {
-    //     }
+    // $.ajax({                 //CANCELLARE OGGETTO IN API
+    // url: 'http://157.230.17.132:4026/sales/36',
+    // method: 'DELETE',
+    // success: function(result) {
+    //     // Do something with the result
+    // }
     // });
+
+
+    $.ajax({
+        url: 'http://157.230.17.132:4026/sales',
+        type: 'POST',
+        data: {
+            salesman: nomeVenditore,
+            amount: parseInt(amountDaAggiungere),
+            date: date
+        },
+        success: function(result) {
+        }
+    });
 }
 
 
