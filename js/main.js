@@ -1,4 +1,47 @@
 $(document).ready(function() {
+
+
+    $('#aggiungi-oggetto').click(function(){
+        apiPost();
+        apiGet();
+    });
+
+
+});
+
+function apiPost() {
+    var nomeVenditore = $('#nome-dipendente').val();
+    var amount = $('#amount').val();
+    // var amountDaAggiungere = parseInt(amount);
+    console.log(amount);
+    var date = $('#date').val();
+    date = moment(date, "YYYY-MM-DD").format("DD-MM-YYYY");
+
+    $.ajax({                 //CANCELLARE OGGETTO IN API
+    url: 'http://157.230.17.132:4026/sales/36',
+    method: 'DELETE',
+    success: function(result) {
+        // Do something with the result
+    }
+    });
+
+
+    // $.ajax({
+    //     url: 'http://157.230.17.132:4026/sales',
+    //     type: 'POST',
+    //     data: {
+    //         salesman: nomeVenditore,
+    //         amount: parseInt(amount),
+    //         date: date
+    //     },
+    //     success: function(result) {
+    //     }
+    // });
+}
+
+
+
+function apiGet(){
     $.ajax({
         url: 'http://157.230.17.132:4026/sales',
         method: 'GET',
@@ -10,14 +53,13 @@ $(document).ready(function() {
             alert('BOOM');
         }
     });
-});
+}
 
 
 function costruttoreDati(data) {
     var mainObj = {};
     for (var i = 0; i < data.length; i++) {
         var oggettoSingolo = data[i];           //associo a variabile ogni singolo oggetto contenuto in data
-        console.log(oggettoSingolo);
         var amount = oggettoSingolo.amount;    //Prendo amount di ogni oggetto nell'API
         var date = oggettoSingolo.date;          //prendo la data di ogni oggetto nell'API
         date = moment(date, "DD-MM-YYYY");      //cambio il formato della data
@@ -26,7 +68,7 @@ function costruttoreDati(data) {
         if (mainObj[month] === undefined) {     //inizializzo il mio mainObj creando le chiavi 'month':0;
             mainObj[month] = 0;
         }
-        mainObj[month] += amount;
+        mainObj[month] += parseInt(amount);
     }
     var mesi = [];
     var valori = [];
